@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag Drop</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+
+<body>
+  <header></header>
+  <main>
+    <div class="container" id="draggable-content">
+      <key-element class="drag-item" id="item-one" draggable="true">
+
+      </key-element>
+      <key-element class="drag-item" id="item-two" draggable="true">
+
+      </key-element>
+      <key-element class="drag-item" id="item-three" draggable="true">
+
+      </key-element>
+    </div>
+    <div class="container">
+      <div class="drop-item" id="zone-one" ondragover="onDragOver(event);" ondrop="onDrop(event);">
+      </div>
+      <div class="drop-item" id="zone-two" ondragover="onDragOver(event);" ondrop="onDrop(event);">
+
+      </div>
+      <div class="drop-item" id="zone-three" ondragover="onDragOver(event);" ondrop="onDrop(event);">
+
+      </div>
+    </div>
+  </main>
+  <footer></footer>
+  <script src="./js/app.js"></script>
+  <script src="./js/keyClass.js"></script>
+</body>
+
+</html>
