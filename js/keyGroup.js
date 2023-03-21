@@ -15,4 +15,22 @@ class KeyGroup extends HTMLElement {
   
     // set initial state
   }
+
+  handleKeydown(event){
+
+  }
+
+  handleClick(event){
+
+  }
+
+  set selected(idx){
+
+  }
+
+  get selected(){
+
+  }
 }
+
+window.customElements.define('key-group', KeyGroup);
