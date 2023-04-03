@@ -1,25 +1,55 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/style.css">
-  <title>Drag and drop</title>
-</head>
-<body>
-  <div class="container" aria-label="Matching Game">
-    <div class="items">
-      <div class="item" tabindex="0" draggable="true" aria-grabbed="false" aria-label="Red Square"></div>
-      <div class="item" tabindex="0" draggable="true" aria-grabbed="false" aria-label="Green Circle"></div>
-      <div class="item" tabindex="0" draggable="true" aria-grabbed="false" aria-label="Blue Triangle"></div>
-    </div>
-    <div class="targets">
-      <div class="target" aria-dropeffect="move" aria-label="Drop Red Square here"></div>
-      <div class="target" aria-dropeffect="move" aria-label="Drop Green Circle here"></div>
-      <div class="target" aria-dropeffect="move" aria-label="Drop Blue Triangle here"></div>
-    </div>
-  </div>
-  <script src="./js/app.js"></script>
-</body>
+    <head>
+        <title>Drag and Drop Example</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link href="./css/style.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="./js/app.js"></script>
+    </head>
+    <body>
+        <h1>Drag and Drop Example</h1>
+        <p>
+            Drag and drop the artists under the heading they belong. See <a href="#kbdinstructions">keyboard instructions</a>
+            .
+        </p>
+        <div id="dragdrop">
+            <h2 id="Favh">Selection List</h2>
+            <ul id="Fav">
+                <li class="draggable" id="red"></li>
+                <li class="draggable" id="orange"></li>
+                <li class="draggable" id="yellow"></li>
+                <li class="draggable" id="green"></li>
+                <li class="draggable" id="blue"></li>
+                <li class="draggable" id="violet"></li>
+            </ul>
+            <h2 id="Tolh">Pass</h2>
+            <ul id="Tol">
+                <li class="empty">None</li>
+            </ul>
+            <h2 id="Rejh">Fail</h2>
+            <ul id="Rej">
+                <li class="empty">None</li>
+            </ul>
+        </div>
+        <h2 id="kbdinstructions">Keyboard Instructions</h2>
+        <ul class="instructions">
+            <li>
+                Use the <kbd>Tab</kbd>
+                to move to the artist you want to move.
+            </li>
+            <li>
+                Select the item you want to move with the <kbd>Spacebar</kbd>
+                .
+            </li>
+            <li>
+                Use the <kbd>Up</kbd>
+                and <kbd>Down</kbd>
+                cursor keys to select a target in the context menu.
+            </li>
+            <li>
+                Press <kbd>Enter</kbd>
+                to move the artist to the target list.
+            </li>
+        </ul>
+    </body>
 </html>
