@@ -1,22 +1,33 @@
 .container {
   display: flex;
-  max-width: 50%;
-  justify-content: space-evenly;
-  margin: auto;
+  justify-content: space-between;
 }
 
-.drag-item {
-  width: 100px;
-  height: 100px;
-  background-color: plum;
-  border: 5px solid black;
-  border-radius: 5%;
+.items {
+  display: flex;
+  gap: 20px;
 }
 
-.drop-item {
+.item {
   width: 100px;
   height: 100px;
-  border: 5px solid black;
-  border-radius: 5%;
-  margin-top: 20px;
+  background-color: white;
+  border: 2px solid black;
+  cursor: move;
+}
+
+.targets {
+  display: flex;
+  gap: 20px;
+}
+
+.target {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  border: 2px dashed black;
+}
+
+.target.matched {
+  border-color: green;
 }
