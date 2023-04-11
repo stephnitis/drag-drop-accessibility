@@ -15,30 +15,51 @@
   <header></header>
   <main>
     <div class="container" id="draggable-content">
-      <key-element class="drag-item" id="item-one" draggable="true">
+      <div class="drag-item" id="item-one" draggable="true" tabindex="0" aria-selected="false"
+        onclick="selectItem(this)" onkeydown="handleKeyDown(event, this)">
 
-      </key-element>
-      <key-element class="drag-item" id="item-two" draggable="true">
+      </div>
+      <div class="drag-item" id="item-two" draggable="true">
 
-      </key-element>
-      <key-element class="drag-item" id="item-three" draggable="true">
+      </div>
+      <div class="drag-item" id="item-three" draggable="true">
 
-      </key-element>
+      </div>
     </div>
     <div class="container">
-      <key-element class="drop-item" id="zone-one" ondragover="onDragOver(event);" ondrop="onDrop(event);">
-      </key-element>
-      <key-element class="drop-item" id="zone-two" ondragover="onDragOver(event);" ondrop="onDrop(event);">
+      <div class="drop-item" id="zone-one" ondragover="onDragOver(event);" ondrop="onDrop(event);">
+      </div>
+      <div class="drop-item" id="zone-two" ondragover="onDragOver(event);" ondrop="onDrop(event);">
 
-      </key-element>
-      <key-element class="drop-item" id="zone-three" ondragover="onDragOver(event);" ondrop="onDrop(event);">
+      </div>
+      <div class="drop-item" id="zone-three" ondragover="onDragOver(event);" ondrop="onDrop(event);">
 
-      </key-element>
+      </div>
     </div>
   </main>
   <footer></footer>
   <script src="./js/app.js"></script>
-  <script src="./js/keyClass.js"></script>
+  <script>
+    function handleKeyDown(event, element) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        selectItem(element);
+      }
+    }
+
+    function selectItem(element) {
+      // Deselect all items in the list
+      const items = element.parentElement.querySelectorAll('[aria-selected="true"]');
+      for (const item of items) {
+        item.setAttribute("aria-selected", "false");
+        item.style.backgroundColor = 'cyan';
+      }
+
+      // Select the clicked item
+      element.setAttribute("aria-selected", "true");
+    }
+
+  </script>
 </body>
 
 </html>

@@ -34,4 +34,11 @@ function onDrop(event){
   
 }
 
+// window.addEventListener('DOMContentLoaded', () => {
+//   const element = document.getElementsByClassName('drag-item');
+//   selectElement.addEventListener('dragstart', onDragStart);
+// });
+
+draggableElements.addEventListener('click', handleClick);
+
 draggableElements.addEventListener('click', handleClick);
