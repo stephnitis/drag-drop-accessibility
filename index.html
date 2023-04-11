@@ -116,9 +116,22 @@
     function handleTargetKeyDown(event, element){
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        selectItem(element);
-        targetList.focus();
+        selectTarget(element);
+        draggable-content.focus();
       } 
+    }
+
+    function selectTarget(element) {
+      // Deselect all items in the list
+      const items = element.parentElement.querySelectorAll('[aria-selected="true"]');
+      for (const item of items) {
+        item.setAttribute("aria-selected", "false");
+       
+      }
+
+      // Select the clicked item
+      element.setAttribute("aria-selected", "true");
+      element.style.backgroundColor = 'plum';
     }
 
     // function moveItem(direction, element) {
