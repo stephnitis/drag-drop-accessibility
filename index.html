@@ -92,10 +92,12 @@
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         selectItem(element);
-      } else if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-        event.preventDefault();
-        moveItem(event.key, element);
-      }
+        targetList.focus();
+      } 
+      // else if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+      //   event.preventDefault();
+      //   moveItem(event.key, element);
+      // }
     }
 
     function selectItem(element) {
@@ -111,23 +113,31 @@
       element.style.backgroundColor = 'cyan';
     }
 
-    function moveItem(direction, element) {
-      // Get the current position of the selected item
-      const currentIndex = [...element.parentElement.children].indexOf(element);
-
-      // Calculate the new position of the selected item based on the arrow key direction
-      const newIndex = direction === "ArrowUp" ? currentIndex - 1 : currentIndex + 1;
-
-      // If the new position is out of bounds, exit the function
-      if (newIndex < 0 || newIndex >= element.parentElement.children.length) {
-        return;
-      }
-
-      // Move the selected item to its new position
-      const newElement = element.parentElement.children[newIndex];
-      element.parentElement.insertBefore(element, newElement);
-      element.focus();
+    function handleTargetKeyDown(event, element){
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        selectItem(element);
+        targetList.focus();
+      } 
     }
+
+    // function moveItem(direction, element) {
+    //   // Get the current position of the selected item
+    //   const currentIndex = [...element.parentElement.children].indexOf(element);
+
+    //   // Calculate the new position of the selected item based on the arrow key direction
+    //   const newIndex = direction === "ArrowUp" ? currentIndex - 1 : currentIndex + 1;
+
+    //   // If the new position is out of bounds, exit the function
+    //   if (newIndex < 0 || newIndex >= element.parentElement.children.length) {
+    //     return;
+    //   }
+
+    //   // Move the selected item to its new position
+    //   const newElement = element.parentElement.children[newIndex];
+    //   element.parentElement.insertBefore(element, newElement);
+    //   element.focus();
+    // }
 
   </script>
 </body>
