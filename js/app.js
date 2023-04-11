@@ -49,7 +49,6 @@
 const init = () => {
   const draggables = document.querySelectorAll('.draggable');
   const droppables = document.querySelectorAll('.droppable');
-  console.log(droppables)
 
   draggables.forEach(draggable => {
     draggable.addEventListener('dragstart', handleDragStart);
@@ -90,7 +89,8 @@ const handleDrop = event => {
 
   const draggable = document.querySelector('.dragging');
   const droppable = event.target.closest('.droppable');
-
+  console.log(draggable);
+  console.log(droppable);
   if (droppable) {
     const afterElement = getDragAfterElement(droppable, event.clientY);
     droppable.insertBefore(draggable, afterElement);
@@ -113,3 +113,5 @@ const getDragAfterElement = (container, y) => {
     }
   }, { offset: Number.NEGATIVE_INFINITY }).element;
 };
+
+init();
