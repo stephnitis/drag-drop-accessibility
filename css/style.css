@@ -5,7 +5,7 @@
   margin: auto;
 }
 
-.drag-item {
+.draggable {
   width: 100px;
   height: 100px;
   background-color: plum;
