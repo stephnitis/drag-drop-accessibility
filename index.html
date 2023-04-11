@@ -14,15 +14,37 @@
 <body>
   <header></header>
   <main>
-    <div class="container" id="draggable-content">
-      <div class="drag-item" data-id="item-one" draggable="true" tabindex="0" aria-selected="false"
-        onclick="selectItem(this)" onkeydown="handleKeyDown(event, this)">
+    <div class="container" id="selectList">
+      <div 
+      class="drag-item" 
+      data-id="item-one" 
+      draggable="true" 
+      tabindex="0" 
+      aria-selected="false"
+      onclick="selectItem(this)" 
+      onkeydown="handleKeyDown(event, this)"
+      >
 
       </div>
-      <div class="drag-item" data-id="item-two" draggable="true">
+      <div 
+      class="drag-item" 
+      data-id="item-two" 
+      draggable="true"
+      tabindex="0" 
+      aria-selected="false"
+      onclick="selectItem(this)" 
+      onkeydown="handleKeyDown(event, this)"
+      >
 
       </div>
-      <div class="drag-item" data-id="item-three" draggable="true">
+      <div class="drag-item" 
+      data-id="item-three" 
+      draggable="true"
+      tabindex="0" 
+      aria-selected="false"
+      onclick="selectItem(this)" 
+      onkeydown="handleKeyDown(event, this)"
+      >
 
       </div>
     </div>
@@ -66,27 +88,7 @@
   </main>
   <footer></footer>
   <script src="./js/app.js"></script>
-  <!-- <script>
-    function handleKeyDown(event, element) {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        selectItem(element);
-      }
-    }
 
-    function selectItem(element) {
-      // Deselect all items in the list
-      const items = element.parentElement.querySelectorAll('[aria-selected="true"]');
-      for (const item of items) {
-        item.setAttribute("aria-selected", "false");
-        item.style.backgroundColor = 'cyan';
-      }
-
-      // Select the clicked item
-      element.setAttribute("aria-selected", "true");
-    }
-
-  </script> -->
   <script>
     let selectElement = null;
 
@@ -121,7 +123,7 @@
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         selectTarget(element);
-        draggable-content.focus();
+        selectList.focus();
       } 
     }
 
