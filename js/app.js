@@ -1,4 +1,4 @@
-const draggableElements = document.getElementById('draggable-content');
+const draggableElements = document.getElementById('selectList');
 
 function handleClick(event){
   let clickedElement = event.target;
