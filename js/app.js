@@ -1,19 +1,21 @@
 const draggableElements = document.getElementById('draggable-content');
 
 function handleClick(event){
-  let selectElement = event.target;
-  console.log(selectElement);
-  selectElement.addEventListener('dragstart', onDragStart);
+  let clickedElement = event.target;
+  console.log(clickedElement);
+  clickedElement.addEventListener('dragstart', onDragStart);
 }
 
 function onDragOver(event) {
   event.preventDefault();
 }
 
-function onDragStart(event){  
+function onDragStart(event){
+  let clickedElement = event.target;
+  let selectElement = clickedElement.getAttribute('data-id');
   event
     .dataTransfer
-    .setData('text/plain', event.target.id);
+    .setData('text/plain', selectElement);
   
   event
     .currentTarget
@@ -26,12 +28,20 @@ function onDrop(event){
     .dataTransfer
     .getData('text/plain');
   
-  const draggableElement = document.getElementById(id);
-  console.log(id);
+  const draggableElement = document.querySelector(`[data-id="${id}"]`);
+  console.log(id)
+  console.log(draggableElement);
   const dropzone = event.target;
   
   dropzone.appendChild(draggableElement);
   
 }
+
+// window.addEventListener('DOMContentLoaded', () => {
+//   const element = document.getElementsByClassName('drag-item');
+//   selectElement.addEventListener('dragstart', onDragStart);
+// });
+
+draggableElements.addEventListener('click', handleClick);
 
 draggableElements.addEventListener('click', handleClick);

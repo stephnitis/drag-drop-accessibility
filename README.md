@@ -16,3 +16,4 @@ Further details in progress...
 - [Example 1](https://salesforce-ux.github.io/dnd-a11y-patterns/#/?_k=yqtddb)
 - [Example 2](https://dev.opera.com/articles/accessible-drag-and-drop/example.html)
 - [Associated Article for Example 2](https://dev.opera.com/articles/accessible-drag-and-drop/)
+- [Screen readers and drag-and-drop](https://www.darins.page/articles/screen-readers-drag-drop-1)
