@@ -88,6 +88,8 @@
 
   </script> -->
   <script>
+    let selectElement = null;
+
     function handleKeyDown(event, element) {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
@@ -111,6 +113,8 @@
       // Select the clicked item
       element.setAttribute("aria-selected", "true");
       element.style.backgroundColor = 'cyan';
+      id = element.getAttribute('data-id');
+      selectElement = document.querySelector(`[data-id="${id}"]`);
     }
 
     function handleTargetKeyDown(event, element){
@@ -132,6 +136,7 @@
       // Select the clicked item
       element.setAttribute("aria-selected", "true");
       element.style.backgroundColor = 'plum';
+      element.appendChild(selectElement);
     }
 
     // function moveItem(direction, element) {
