@@ -166,12 +166,6 @@ function keyMotions(event) {
 }
 
 function moveLeft() {
-  // need if / else -> if current focus is draggable move through remainder
-  // else current is droppable move through list
-
-  // currentDroppable = (currentDroppable === 0) ? droppables.length - 1 : currentDroppable - 1;
-  // droppables[currentDroppable].focus();
-
   let currentElement = document.activeElement;
 
   // adjust for roving tabindex side to side - easier than previous
@@ -197,11 +191,6 @@ function moveLeft() {
 }
 
 function moveRight() {
-  // need if / else -> if current focus is draggable move through remainder
-  // else current is droppable move through list
-  // currentDroppable = (currentDroppable === droppables.length - 1) ? 0 : currentDroppable + 1;
-  // droppables[currentDroppable].focus();
-
   let currentElement = document.activeElement;
 
   // adjust for roving tabindex side to side - easier than previous
