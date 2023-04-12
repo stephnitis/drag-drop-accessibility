@@ -115,6 +115,7 @@ function selectTarget(element) {
   element.style.backgroundColor = 'plum';
   element.appendChild(selectElement);
   getNextFocusIndex();
+  setFocusOnNextItem();
 }
 
 function setFocusOnNextItem() {
@@ -192,7 +193,7 @@ function moveUp() {
   //   selectList.focus();
   // }
 
-  setFocusOnNextItem();
+  
 }
 
 function moveDown() {
