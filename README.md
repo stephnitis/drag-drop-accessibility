@@ -6,8 +6,10 @@ Drag elements from top and drop them over elements on bottom via mouse
 
 OR
 
-Tab into elements use spacebar/enter key to select on element - element should change color if selected
-Keyboard focus will shift to bottom element use tab or arrow keys to navigate through elements spacebar/enter to "drop" element on target
+- Tab into elements use spacebar/enter key to select on element 
+- Element should change color when selected
+- Keyboard focus will shift to bottom element use tab or arrow keys to navigate through target elements
+- Utilize spacebar/enter to "drop" element on target
 
 [Deployed Site](https://stephnitis.github.io/drag-drop-accessibility/)
 
