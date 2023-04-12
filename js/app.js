@@ -1,3 +1,7 @@
+'use strict';
+
+// TODO: need to be able to re-drag draggable elements to new positions
+
 const init = () => {
   const draggables = document.querySelectorAll('.draggable');
   const droppables = document.querySelectorAll('.droppable');
