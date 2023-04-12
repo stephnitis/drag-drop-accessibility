@@ -4,13 +4,18 @@ const targetList = document.getElementById('targetList');
 const droppables = targetList.querySelectorAll('.droppable');
 const selectList = document.getElementById('selectList');
 const draggables = selectList.querySelectorAll('.draggable');
-const focusableSelectors = ['select','[tabindex]'];
+const focusableSelectors = ['select', '[tabindex]'];
 const focusableElements = document.querySelectorAll(focusableSelectors.join(', '));
 console.log(focusableElements);
 
 let selectElement = null;
 let currentDroppable = 0;
 let currentDraggable = 0;
+
+const selectedItem = document.querySelector('[aria-selected="true"]');
+let nextIndex = 0;
+console.log('NEXT START', nextIndex);
+console.log('SELECT', selectItem);
 
 const KEYS = {
   LEFT_ARROW: 'ArrowLeft',
@@ -49,7 +54,6 @@ const initKeydown = () => {
 function handleKeyDown(event) {
   const key = event.key;
   const target = event.target;
-  console.log(target);
 
   if (key === KEYS.ENTER || key === KEYS.SPACE) {
     event.preventDefault();
@@ -59,8 +63,14 @@ function handleKeyDown(event) {
   }
 }
 
+/**
+ * The function selects an item in a list and deselects all other items.
+ * @param id - The `id` parameter is a string representing the unique identifier of the item that was
+ * clicked on in a list. This function is designed to be used with a select list where only one item
+ * can be selected at a time. When an item is clicked, this function deselects all other items in the
+ */
 function selectItem(id) {
-  
+
   // Deselect all items in the list
   const items = selectList.querySelectorAll('[aria-selected="true"]');
   for (const item of items) {
@@ -70,7 +80,6 @@ function selectItem(id) {
   selectElement = document.querySelector(`[data-id="${id}"]`);
   selectElement.setAttribute('aria-selected', 'true');
   selectElement.style.backgroundColor = 'cyan';
-  console.log(selectElement);
 }
 
 /**
@@ -85,7 +94,6 @@ function handleTargetKeyDown(event) {
   if (event.key === KEYS.ENTER || event.key === KEYS.SPACE) {
     event.preventDefault();
     selectTarget(element);
-    // draggables[0].focus();
   }
 }
 
@@ -105,6 +113,32 @@ function selectTarget(element) {
   element.setAttribute("aria-selected", "true");
   element.style.backgroundColor = 'plum';
   element.appendChild(selectElement);
+  getNextFocusIndex();
+  setFocusOnNextItem();
+  console.log('NEXT', nextIndex);
+}
+
+function setFocusOnNextItem() {
+  if (selectedItem) {
+    selectedItem.setAttribute('aria-selected', 'false');
+    selectedItem.setAttribute('tabindex', '-1');
+  }
+  // need to check if there is a next focusable item in the draggables list
+  // set the attributes
+  const nextItem = focusableElements[nextIndex];
+  nextItem.focus();
+  nextItem.setAttribute('aria-selected', 'true');
+}
+
+// need to return the index of the next focusable item in the draggables list
+function getNextFocusIndex(){
+  // loop through all the focusable items in the draggables list and return the index of the first item that does not have the aria-selected attribute set to true
+  for (let i = 0; i < focusableElements.length; i++) {
+    if (focusableElements[i].getAttribute('aria-selected') !== 'true') {
+      nextIndex = i;
+      return i;
+    }
+  }
 }
 
 /**
@@ -147,18 +181,20 @@ function moveRight() {
   droppables[currentDroppable].focus();
 }
 
-function moveUp(){
+function moveUp() {
   // roving tab index between two sections -> regardless should move to next section
   // potentially based on current activeElement
   // need to move up to "next" draggable
-  let focusedElement = document.activeElement;
-  console.log(focusedElement);
-  if(focusedElement.className === "droppable"){
-    selectList.focus();
-  }
+  // let focusedElement = document.activeElement;
+  // console.log(focusedElement);
+  // if (focusedElement.className === "droppable") {
+  //   selectList.focus();
+  // }
+
+  
 }
 
-function moveDown(){
+function moveDown() {
   // roving tab index between two sections -> regardless should move to next section
   // potentially based on current activeElement
   // need to move up to "next" droppable -> where no element has been placed yet
