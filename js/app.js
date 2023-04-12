@@ -1,47 +1,69 @@
-const draggableElements = document.getElementById('selectList');
+const init = () => {
+  const draggables = document.querySelectorAll('.draggable');
+  const droppables = document.querySelectorAll('.droppable');
 
-function handleClick(event){
-  let clickedElement = event.target;
-  console.log(clickedElement);
-  clickedElement.addEventListener('dragstart', onDragStart);
-}
+  draggables.forEach(draggable => {
+    draggable.addEventListener('dragstart', handleDragStart);
+    draggable.addEventListener('dragend', handleDragEnd);
+  });
 
-function onDragOver(event) {
+  droppables.forEach(droppable => {
+    droppable.addEventListener('dragenter', handleDragEnter);
+    droppable.addEventListener('dragover', handleDragOver);
+    droppable.addEventListener('dragleave', handleDragLeave);
+    droppable.addEventListener('drop', handleDrop);
+  });
+};
+
+const handleDragStart = event => {
+  event.currentTarget.classList.add('dragging');
+};
+
+const handleDragEnd = event => {
+  event.currentTarget.classList.remove('dragging');
+};
+
+const handleDragEnter = event => {
   event.preventDefault();
-}
+  event.currentTarget.classList.add('droppable-hover');
+};
 
-function onDragStart(event){
-  let clickedElement = event.target;
-  let selectElement = clickedElement.getAttribute('data-id');
-  event
-    .dataTransfer
-    .setData('text/plain', selectElement);
-  
-  event
-    .currentTarget
-    .style
-    .backgroundColor = 'cyan';
-}
+const handleDragOver = event => {
+  event.preventDefault();
+};
 
-function onDrop(event){
-  const id = event
-    .dataTransfer
-    .getData('text/plain');
-  
-  const draggableElement = document.querySelector(`[data-id="${id}"]`);
-  console.log(id)
-  console.log(draggableElement);
-  const dropzone = event.target;
-  
-  dropzone.appendChild(draggableElement);
-  
-}
+const handleDragLeave = event => {
+  event.currentTarget.classList.remove('droppable-hover');
+};
 
-// window.addEventListener('DOMContentLoaded', () => {
-//   const element = document.getElementsByClassName('drag-item');
-//   selectElement.addEventListener('dragstart', onDragStart);
-// });
+const handleDrop = event => {
+  event.preventDefault();
 
-draggableElements.addEventListener('click', handleClick);
+  const draggable = document.querySelector('.dragging');
+  const droppable = event.target.closest('.droppable');
+  console.log(draggable);
+  console.log(droppable);
+  if (droppable) {
+    const afterElement = getDragAfterElement(droppable, event.clientY);
+    droppable.insertBefore(draggable, afterElement);
+  }
 
-draggableElements.addEventListener('click', handleClick);
+  draggable.classList.remove('dragging');
+  droppable.classList.remove('droppable-hover');
+};
+
+const getDragAfterElement = (container, y) => {
+  const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child };
+    } else {
+      return closest;
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+};
+
+init();

@@ -16,71 +16,53 @@
   <main>
     <div class="container" id="selectList">
       <div 
-      class="drag-item" 
+      class="draggable" 
       data-id="item-one" 
-      draggable="true" 
+      draggable="true"
       tabindex="0" 
       aria-selected="false"
-      onclick="selectItem(this)" 
-      onkeydown="handleKeyDown(event, this)"
       >
 
       </div>
       <div 
-      class="drag-item" 
+      class="draggable" 
       data-id="item-two" 
       draggable="true"
       tabindex="0" 
       aria-selected="false"
-      onclick="selectItem(this)" 
-      onkeydown="handleKeyDown(event, this)"
       >
 
       </div>
-      <div class="drag-item" 
+      <div class="draggable" 
       data-id="item-three" 
       draggable="true"
       tabindex="0" 
       aria-selected="false"
-      onclick="selectItem(this)" 
-      onkeydown="handleKeyDown(event, this)"
       >
 
       </div>
     </div>
     <div class="container" id="targetList">
       <div 
-      class="drop-item" 
-      data-id="zone-one" 
-      ondragover="onDragOver(event);" 
-      ondrop="onDrop(event);"
+      class="droppable" 
+      data-id="zone-one"
       tabindex="0" 
       aria-checked="false" 
-      onclick="checkItem(this)" 
-      onkeydown="handleTargetKeyDown(event, this)"
       >
       </div>
       <div 
-      class="drop-item" 
-      data-id="zone-two" 
-      ondragover="onDragOver(event);" 
-      ondrop="onDrop(event);"
+      class="droppable" 
+      data-id="zone-two"
       tabindex="0" 
       aria-checked="false" 
-      onclick="checkItem(this)" 
-      onkeydown="handleTargetKeyDown(event, this)"
       >
 
       </div>
       <div 
-      class="drop-item" 
-      data-id="zone-three" 
-      ondragover="onDragOver(event);" 
-      ondrop="onDrop(event);"
+      class="droppable" 
+      data-id="zone-three"
       tabindex="0" 
       aria-checked="false" 
-      onclick="checkItem(this)" 
-      onkeydown="handleTargetKeyDown(event, this)"
       >
 
       </div>
@@ -88,78 +70,7 @@
   </main>
   <footer></footer>
   <script src="./js/app.js"></script>
-
-  <script>
-    let selectElement = null;
-
-    function handleKeyDown(event, element) {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        selectItem(element);
-        targetList.focus();
-      } 
-      // else if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-      //   event.preventDefault();
-      //   moveItem(event.key, element);
-      // }
-    }
-
-    function selectItem(element) {
-      // Deselect all items in the list
-      const items = element.parentElement.querySelectorAll('[aria-selected="true"]');
-      for (const item of items) {
-        item.setAttribute("aria-selected", "false");
-       
-      }
-
-      // Select the clicked item
-      element.setAttribute("aria-selected", "true");
-      element.style.backgroundColor = 'cyan';
-      id = element.getAttribute('data-id');
-      selectElement = document.querySelector(`[data-id="${id}"]`);
-    }
-
-    function handleTargetKeyDown(event, element){
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        selectTarget(element);
-        selectList.focus();
-      } 
-    }
-
-    function selectTarget(element) {
-      // Deselect all items in the list
-      const items = element.parentElement.querySelectorAll('[aria-selected="true"]');
-      for (const item of items) {
-        item.setAttribute("aria-selected", "false");
-       
-      }
-
-      // Select the clicked item
-      element.setAttribute("aria-selected", "true");
-      element.style.backgroundColor = 'plum';
-      element.appendChild(selectElement);
-    }
-
-    // function moveItem(direction, element) {
-    //   // Get the current position of the selected item
-    //   const currentIndex = [...element.parentElement.children].indexOf(element);
-
-    //   // Calculate the new position of the selected item based on the arrow key direction
-    //   const newIndex = direction === "ArrowUp" ? currentIndex - 1 : currentIndex + 1;
-
-    //   // If the new position is out of bounds, exit the function
-    //   if (newIndex < 0 || newIndex >= element.parentElement.children.length) {
-    //     return;
-    //   }
-
-    //   // Move the selected item to its new position
-    //   const newElement = element.parentElement.children[newIndex];
-    //   element.parentElement.insertBefore(element, newElement);
-    //   element.focus();
-    // }
-
-  </script>
+  <script src="./js/keyboard.js"></script>
 </body>
 
 </html>
