@@ -101,6 +101,7 @@ function handleTargetKeyDown(event) {
  * selected by the user. It is used to select and highlight the clicked item in a list of items.
  */
 function selectTarget(element) {
+  // potentially I only want to be able to select a target element if I have already select a draggable - otherwise I can only move between the selections
   // Deselect all items in the list
   const items = targetList.querySelectorAll('[aria-selected="true"]');
   for (const item of items) {
@@ -108,9 +109,10 @@ function selectTarget(element) {
   }
 
   // Select the clicked item
-  element.setAttribute("aria-selected", "true");
+  element.setAttribute('aria-selected', 'true');
   element.style.backgroundColor = 'plum';
   element.appendChild(selectElement);
+  selectElement.setAttribute('aria-selected', 'false');
   getNextFocusIndex();
   setFocusOnNextItem();
   console.log('NEXT', nextIndex);
@@ -125,7 +127,7 @@ function setFocusOnNextItem() {
   // set the attributes
   const nextItem = focusableElements[nextIndex];
   nextItem.focus();
-  nextItem.setAttribute('aria-selected', 'true');
+  // nextItem.setAttribute('aria-selected', 'true');
 }
 
 // need to return the index of the next focusable item in the draggables list
@@ -218,15 +220,15 @@ function moveRight() {
 function moveUpOrDown() {
   // find the current element with focus in the document
   let currentElement = document.activeElement;
-
+  console.log(currentElement);
   // If the current element is in the selectList
   if (selectList.contains(currentElement)) {
     droppables[0].focus();
   }
   // If the current element is in the targetList
   else if (targetList.contains(currentElement)) {
-    // some bugs utilizing nextIndex value this way - to be resolved
-    draggables[nextIndex].focus();
+    getNextFocusIndex();
+    setFocusOnNextItem();
   }
 
 }
