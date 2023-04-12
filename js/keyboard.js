@@ -3,9 +3,11 @@
 const targetList = document.getElementById('targetList');
 const droppables = targetList.querySelectorAll('.droppable');
 const selectList = document.getElementById('selectList');
+const draggables = selectList.querySelectorAll('.draggable');
 
 let selectElement = null;
 let currentDroppable = 0;
+let currentDraggable = 0;
 
 const KEYS = {
   LEFT_ARROW: 'ArrowLeft',
@@ -17,7 +19,6 @@ const KEYS = {
 };
 
 const initKeydown = () => {
-  const draggables = document.querySelectorAll('.draggable');
 
   draggables.forEach(draggable => {
     draggable.addEventListener('keydown', handleKeyDown);
@@ -28,6 +29,7 @@ const initKeydown = () => {
     droppable.addEventListener('keydown', handleTargetKeyDown);
     droppable.addEventListener('keydown', keyMotions);
   });
+
 };
 
 function handleKeyDown(event) {
@@ -41,22 +43,6 @@ function handleKeyDown(event) {
     let id = target.getAttribute('data-id');
     selectItem(id);
   }
-
-  // if (key === KEYS.ENTER || key === KEYS.SPACE) {
-  //   event.preventDefault();
-  //   droppables[0].focus();
-  //   // Deselect all items in the list
-  //   const items = selectList.querySelectorAll('[aria-selected="true"]');
-  //   for (const item of items) {
-  //     item.setAttribute('aria-selected', 'false');
-  //   }
-
-  //   // Select the clicked item
-  //   target.setAttribute('aria-selected', 'true');
-  //   target.style.backgroundColor = 'cyan';
-  //   let id = target.getAttribute('data-id');
-  //   selectElement = document.querySelector(`[data-id="${id}"]`);
-  // }
 }
 
 function selectItem(id) {
@@ -75,10 +61,10 @@ function selectItem(id) {
 
 function handleTargetKeyDown(event) {
   let element = event.target;
-  if (event.key === 'Enter' || event.key === " ") {
+  if (event.key === KEYS.ENTER || event.key === KEYS.SPACE) {
     event.preventDefault();
     selectTarget(element);
-    selectList.focus();
+    // draggables[0].focus();
   }
 }
 
@@ -94,8 +80,6 @@ function selectTarget(element) {
   element.style.backgroundColor = 'plum';
   element.appendChild(selectElement);
 }
-
-initKeydown();
 
 function keyMotions(event) {
   const key = event.key;
@@ -120,7 +104,9 @@ function keyMotions(event) {
 function moveLeft() {
   currentDroppable = (currentDroppable === 0) ? droppables.length - 1 : currentDroppable - 1;
   droppables[currentDroppable].focus();
-  droppables[currentDroppable].style.backgroundColor = 'yellow';
+
+  // currentDraggable = (currentDraggable === 0) ? draggables.length - 1 : currentDraggable - 1;
+  // draggables[currentDraggable].focus();
 }
 
 function moveRight() {
@@ -128,3 +114,4 @@ function moveRight() {
   droppables[currentDroppable].focus();
 }
 
+initKeydown();
