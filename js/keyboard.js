@@ -131,7 +131,7 @@ function setFocusOnNextItem() {
 }
 
 // need to return the index of the next focusable item in the draggables list
-function getNextFocusIndex(){
+function getNextFocusIndex() {
   // loop through all the focusable items in the draggables list and return the index of the first item that does not have the aria-selected attribute set to true
   for (let i = 0; i < focusableElements.length; i++) {
     if (focusableElements[i].getAttribute('aria-selected') !== 'true') {
@@ -154,13 +154,13 @@ function keyMotions(event) {
       moveLeft();
       break;
     case KEYS.UP_ARROW:
-      moveUp();
+      moveUpOrDown(key);
       break;
     case KEYS.RIGHT_ARROW:
       moveRight();
       break;
     case KEYS.DOWN_ARROW:
-      moveDown();
+      moveUpOrDown(key);
       break;
     default:
       break;
@@ -181,6 +181,45 @@ function moveRight() {
   droppables[currentDroppable].focus();
 }
 
+function moveUpOrDown(key) {
+
+  let currentElement = document.activeElement;
+  console.log(currentElement);
+  console.log('PREVIOUS SIBLING', currentElement.previousElementSibling)
+  // If the current element is in the selectList
+  if (selectList.contains(currentElement)) {
+    droppables[0].focus();
+
+    // If the up arrow was pressed and there is a previous element
+
+    // if (key === KEYS.UP_ARROW && currentElement.previousElementSibling) {
+    //   currentElement.previousElementSibling.focus();
+    // }
+
+    // If the down arrow was pressed and there is a next element
+
+    // else if (key === KEYS.DOWN_ARROW && currentElement.nextElementSibling) {
+    //   currentElement.nextElementSibling.focus();
+    // }
+  }
+
+  // If the current element is in the targetList
+  else if (targetList.contains(currentElement)) {
+    draggables[nextIndex].focus();
+
+    // If the up arrow was pressed and there is a previous element
+
+    // if (key === KEYS.UP_ARROW && currentElement.previousElementSibling) {
+    //   currentElement.previousElementSibling.focus();
+    // }
+    // If the down arrow was pressed and there is a next element
+
+    // else if (key === KEYS.DOWN_ARROW && currentElement.nextElementSibling) {
+    //   currentElement.nextElementSibling.focus();
+    // }
+  }
+}
+
 function moveUp() {
   // roving tab index between two sections -> regardless should move to next section
   // potentially based on current activeElement
@@ -191,7 +230,7 @@ function moveUp() {
   //   selectList.focus();
   // }
 
-  
+
 }
 
 function moveDown() {
@@ -201,3 +240,4 @@ function moveDown() {
 }
 
 initKeydown();
+
