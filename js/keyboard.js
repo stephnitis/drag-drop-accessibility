@@ -2,14 +2,16 @@
 
 // let selectElement = null;
 const targetList = document.getElementById('targetList');
+const droppables = targetList.querySelectorAll('.droppable');
+console.log(droppables);
 const selectList = document.getElementById('selectList');
-const focusableSelectors = ['a[href]', 'button', 'input', 'select', 'textarea', '[tabindex]'];
-const focusableElements = document.querySelectorAll(focusableSelectors.join(', '));
-
+// const focusableSelectors = ['a[href]', 'button', 'input', 'select', 'textarea', '[tabindex]'];
+// const focusableElements = document.querySelectorAll(focusableSelectors.join(', '));
+let currentDroppable = 0;
 
 const initKeydown = () => {
   const draggables = document.querySelectorAll('.draggable');
-  const droppables = document.querySelectorAll('.droppable');
+  // const droppables = document.querySelectorAll('.droppable');
 
   draggables.forEach(draggable => {
     draggable.addEventListener('keydown', handleKeyDown);
@@ -81,71 +83,76 @@ function handleKeyDown(event) {
   const key = event.key;
   const target = event.target;
   // const droppable = target.closest('.droppable');
-  const droppable = document.querySelector('.droppable:first-child');
-  const sibling = droppable && droppable.nextElementSibling;
-  console.log('CLOSEST', droppable);
-  console.log('NEXT SIBLING', sibling);
+  // const droppable = document.querySelector('.droppable:first-child');
+  // const sibling = droppable && droppable.nextElementSibling;
+  
+  
+  console.log('CURRENT', droppables[currentDroppable]);
 
   if (key === "Enter" || key === " ") {
     event.preventDefault();
     target.style.backgroundColor = 'cyan';
-    droppable.focus();
+    droppables[0].focus();
   }
 
   switch (key) {
     case KEYS.LEFT_ARROW:
-      moveLeft(sibling, target);
+      moveLeft();
       break;
     case KEYS.UP_ARROW:
-      moveUp(sibling, target);
+      moveUp();
       break;
     case KEYS.RIGHT_ARROW:
-      moveRight(sibling, target);
+      moveRight();
       break;
     case KEYS.DOWN_ARROW:
-      moveDown(sibling, target);
+      moveDown();
       break;
     default:
       break;
   }
 }
 
-function moveLeft(sibling, target) {
-  if (sibling && sibling.querySelector('[aria-selected="true"]')) {
-    const newTarget = sibling.querySelector('[aria-selected="true"]');
-    newTarget.setAttribute('aria-selected', 'false');
-    newTarget.setAttribute('tabindex', '-1');
-    target.setAttribute('aria-selected', 'true');
-    target.setAttribute('tabindex', '0');
-    newTarget.focus();
-  }
+function moveLeft() {
+  currentDroppable = (currentDroppable === 0) ? droppables.length - 1 : currentDroppable - 1;
+  droppables[currentDroppable].focus();
 }
 
-function moveUp(sibling, target) {
-  if (sibling && sibling.querySelector('[aria-selected="true"]')) {
-    const newTarget = sibling.querySelector('[aria-selected="true"]');
-    newTarget.setAttribute('aria-selected', 'false');
-    target.setAttribute('aria-selected', 'true');
-    newTarget.focus();
-  }
+function moveRight() {
+  currentDroppable = (droppables.length - 1) ? currentDroppable = 0 : currentDroppable + 1;
+  droppables[currentDroppable].focus();
 }
 
-function moveRight(sibling, target) {
-  if (sibling && target.querySelector('[aria-selected="true"]')) {
-    const newTarget = sibling.lastElementChild;
-    newTarget.setAttribute('aria-selected', 'true');
-    target.querySelector('[aria-selected="true"]').setAttribute('aria-selected', 'false');
-    newTarget.focus();
-  }
-}
+// div.addEventListener('keydown', (event) => {
+//   if (event.keyCode === 37 || event.keyCode === 38) { // Left or Up arrow key
+//     currentDroppable = (currentDroppable === 0) ? droppables.length - 1 : currentDroppable - 1;
+//     droppables[currentDroppable].focus();
+//     event.preventDefault();
+//   } else if (event.keyCode === 39 || event.keyCode === 40) { // Right or Down arrow key
+//     currentDroppable = (currentDroppable === droppables.length - 1) ? 0 : currentDroppable + 1;
+//     droppables[currentDroppable].focus();
+//     event.preventDefault();
+//   }
+// });
 
-function moveDown(sibling, target) {
-  if (sibling && target.querySelector('[aria-selected="true"]')) {
-    const newTarget = sibling.firstElementChild;
-    newTarget.setAttribute('aria-selected', 'true');
-    target.querySelector('[aria-selected="true"]').setAttribute('aria-selected', 'false');
-    newTarget.focus();
-  }
-}
+// function moveUp(sibling, target) {
+//   if (sibling && sibling.querySelector('[aria-selected="true"]')) {
+//     const newTarget = sibling.querySelector('[aria-selected="true"]');
+//     newTarget.setAttribute('aria-selected', 'false');
+//     target.setAttribute('aria-selected', 'true');
+//     newTarget.focus();
+//   }
+// }
+
+
+// function moveDown(sibling, target) {
+//   if (sibling && target.querySelector('[aria-selected="true"]')) {
+//     const newTarget = sibling.firstElementChild;
+//     newTarget.setAttribute('aria-selected', 'true');
+//     target.querySelector('[aria-selected="true"]').setAttribute('aria-selected', 'false');
+//     newTarget.focus();
+//   }
+// }
 
 document.addEventListener('keydown', handleKeyDown);
+
