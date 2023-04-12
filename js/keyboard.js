@@ -1,7 +1,11 @@
 'use strict';
 
 // let selectElement = null;
-const targetList = document.getElementById('targetList')
+const targetList = document.getElementById('targetList');
+const selectList = document.getElementById('selectList');
+const focusableSelectors = ['a[href]', 'button', 'input', 'select', 'textarea', '[tabindex]'];
+const focusableElements = document.querySelectorAll(focusableSelectors.join(', '));
+
 
 const initKeydown = () => {
   const draggables = document.querySelectorAll('.draggable');
@@ -45,7 +49,7 @@ function handleTargetKeyDown(event) {
   let element = event.target;
   if (event.key === "Enter" || event.key === " ") {
     event.preventDefault();
-    selectTarget(element);
+    // selectTarget(element);
     selectList.focus();
   }
 }
@@ -77,7 +81,7 @@ function handleKeyDown(event) {
   const key = event.key;
   const target = event.target;
   // const droppable = target.closest('.droppable');
-  const droppable = targetList.firstChild;
+  const droppable = document.querySelector('.droppable:first-child');
   const sibling = droppable && droppable.nextElementSibling;
   console.log('CLOSEST', droppable);
   console.log('NEXT SIBLING', sibling);
@@ -85,6 +89,7 @@ function handleKeyDown(event) {
   if (key === "Enter" || key === " ") {
     event.preventDefault();
     target.style.backgroundColor = 'cyan';
+    droppable.focus();
   }
 
   switch (key) {
@@ -109,7 +114,9 @@ function moveLeft(sibling, target) {
   if (sibling && sibling.querySelector('[aria-selected="true"]')) {
     const newTarget = sibling.querySelector('[aria-selected="true"]');
     newTarget.setAttribute('aria-selected', 'false');
+    newTarget.setAttribute('tabindex', '-1');
     target.setAttribute('aria-selected', 'true');
+    target.setAttribute('tabindex', '0');
     newTarget.focus();
   }
 }
