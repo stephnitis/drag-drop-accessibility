@@ -111,10 +111,13 @@ function selectTarget(element) {
   // Select the clicked item
   element.setAttribute('aria-selected', 'true');
   element.style.backgroundColor = 'plum';
+  // potentially appendChild is not the best here
+  // potentially selecting the target it part of the problem?
   element.appendChild(selectElement);
   getNextFocusIndex();
   setFocusOnNextItem();
   console.log('NEXT', nextIndex);
+  
 }
 
 function setFocusOnNextItem() {
