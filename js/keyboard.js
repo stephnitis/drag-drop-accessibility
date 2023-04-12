@@ -52,7 +52,6 @@ const initKeydown = () => {
 function handleKeyDown(event) {
   const key = event.key;
   const target = event.target;
-  console.log(target);
 
   if (key === KEYS.ENTER || key === KEYS.SPACE) {
     event.preventDefault();
@@ -79,7 +78,6 @@ function selectItem(id) {
   selectElement = document.querySelector(`[data-id="${id}"]`);
   selectElement.setAttribute('aria-selected', 'true');
   selectElement.style.backgroundColor = 'cyan';
-  console.log(selectElement);
 }
 
 /**
@@ -94,7 +92,6 @@ function handleTargetKeyDown(event) {
   if (event.key === KEYS.ENTER || event.key === KEYS.SPACE) {
     event.preventDefault();
     selectTarget(element);
-    // draggables[0].focus();
   }
 }
 
@@ -140,7 +137,7 @@ function getNextFocusIndex(){
       return i;
     }
   }
-  console.log(nextIndex);
+  console.log('NEXT', nextIndex);
 }
 
 /**
