@@ -14,6 +14,8 @@ let currentDraggable = 0;
 
 const selectedItem = document.querySelector('[aria-selected="true"]');
 let nextIndex = 0;
+console.log('NEXT START', nextIndex);
+console.log('SELECT', selectItem);
 
 const KEYS = {
   LEFT_ARROW: 'ArrowLeft',
@@ -113,6 +115,7 @@ function selectTarget(element) {
   element.appendChild(selectElement);
   getNextFocusIndex();
   setFocusOnNextItem();
+  console.log('NEXT', nextIndex);
 }
 
 function setFocusOnNextItem() {
@@ -125,7 +128,6 @@ function setFocusOnNextItem() {
   const nextItem = focusableElements[nextIndex];
   nextItem.focus();
   nextItem.setAttribute('aria-selected', 'true');
-  nextItem.removeAttribute('tabindex');
 }
 
 // need to return the index of the next focusable item in the draggables list
@@ -137,7 +139,6 @@ function getNextFocusIndex(){
       return i;
     }
   }
-  console.log('NEXT', nextIndex);
 }
 
 /**
