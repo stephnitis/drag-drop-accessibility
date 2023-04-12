@@ -6,10 +6,15 @@ Drag elements from top and drop them over elements on bottom via mouse
 
 OR
 
-- Tab into elements use spacebar/enter key to select on element 
+- Tab into elements
+- Use tab key to move through all elements OR left/right arrow keys to move through select elements
+- Use spacebar/enter key to select on element
 - Element should change color when selected
-- Keyboard focus will shift to bottom element use tab or arrow keys to navigate through target elements
+- Keyboard focus will shift to target elements
+- Use tab key OR left/right arrow keys to navigate through target elements
 - Utilize spacebar/enter to "drop" element on target
+- Keyboard focus will shift to select elements
+- Utilize up/down arrow keys to navigate back and forth between two lists
 
 [Deployed Site](https://stephnitis.github.io/drag-drop-accessibility/)
 
