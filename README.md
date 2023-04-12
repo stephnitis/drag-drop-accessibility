@@ -11,6 +11,8 @@ Keyboard focus will shift to bottom element use tab or arrow keys to navigate th
 
 [Deployed Site](https://stephnitis.github.io/drag-drop-accessibility/)
 
+Additional functionality in progress...
+
 ## References
 
 - [Build rich, accessible interfaces](https://blog.logrocket.com/build-rich-accessible-javascript-interfaces/)
