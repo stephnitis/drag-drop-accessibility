@@ -14,8 +14,6 @@ let currentDraggable = 0;
 
 const selectedItem = document.querySelector('[aria-selected="true"]');
 let nextIndex = 0;
-console.log('NEXT START', nextIndex);
-console.log('SELECT', selectItem);
 
 const KEYS = {
   LEFT_ARROW: 'ArrowLeft',
@@ -170,39 +168,62 @@ function keyMotions(event) {
 function moveLeft() {
   // need if / else -> if current focus is draggable move through remainder
   // else current is droppable move through list
-  currentDroppable = (currentDroppable === 0) ? droppables.length - 1 : currentDroppable - 1;
-  droppables[currentDroppable].focus();
 
-  // If the up arrow was pressed and there is a previous element
+  // currentDroppable = (currentDroppable === 0) ? droppables.length - 1 : currentDroppable - 1;
+  // droppables[currentDroppable].focus();
+
+  let currentElement = document.activeElement;
+
   // adjust for roving tabindex side to side - easier than previous
-
-  // if (key === KEYS.UP_ARROW && currentElement.previousElementSibling) {
-  //   currentElement.previousElementSibling.focus();
-  // }
-  // If the down arrow was pressed and there is a next element
-
-  // else if (key === KEYS.DOWN_ARROW && currentElement.nextElementSibling) {
-  //   currentElement.nextElementSibling.focus();
-  // }
+  if (selectList.contains(currentElement)) {
+    // If the left arrow was pressed and there is a previous element
+    if (currentElement.previousElementSibling) {
+      currentElement.previousElementSibling.focus();
+    }
+    // If the left arrow was pressed and there is not a previous sibling element
+    else if (!currentElement.previousElementSibling) {
+      draggables[draggables.length - 1].focus();
+    }
+  } else if (targetList.contains(currentElement)) {
+    // If the left arrow was pressed and there is a previous element
+    if (currentElement.previousElementSibling) {
+      currentElement.previousElementSibling.focus();
+    }
+    // If the left arrow was pressed and there is not a previous sibling element
+    else if (!currentElement.previousElementSibling) {
+      droppables[droppables.length - 1].focus();
+    }
+  }
 }
 
 function moveRight() {
   // need if / else -> if current focus is draggable move through remainder
   // else current is droppable move through list
-  currentDroppable = (currentDroppable === droppables.length - 1) ? 0 : currentDroppable + 1;
-  droppables[currentDroppable].focus();
+  // currentDroppable = (currentDroppable === droppables.length - 1) ? 0 : currentDroppable + 1;
+  // droppables[currentDroppable].focus();
 
-    // Adjust for roving tabindex side to side - better method to incorporate both lists
+  let currentElement = document.activeElement;
 
-    // if (key === KEYS.UP_ARROW && currentElement.previousElementSibling) {
-    //   currentElement.previousElementSibling.focus();
-    // }
-
-    // If the down arrow was pressed and there is a next element
-
-    // else if (key === KEYS.DOWN_ARROW && currentElement.nextElementSibling) {
-    //   currentElement.nextElementSibling.focus();
-    // }
+  // adjust for roving tabindex side to side - easier than previous
+  if (selectList.contains(currentElement)) {
+    // If the left arrow was pressed and there is a previous element
+    if (currentElement.nextElementSibling) {
+      currentElement.nextElementSibling.focus();
+    }
+    // If the left arrow was pressed and there is not a previous sibling element
+    else if (!currentElement.nextElementSibling) {
+      draggables[0].focus();
+    }
+  } else if (targetList.contains(currentElement)) {
+    // If the left arrow was pressed and there is a previous element
+    if (currentElement.nextElementSibling) {
+      currentElement.nextElementSibling.focus();
+    }
+    // If the left arrow was pressed and there is not a previous sibling element
+    else if (!currentElement.nextElementSibling) {
+      droppables[0].focus();
+    }
+  }
 }
 
 function moveUpOrDown() {
