@@ -82,6 +82,7 @@ const KEYS = {
 function handleKeyDown(event) {
   const key = event.key;
   const target = event.target;
+  console.log(target);
   // const droppable = target.closest('.droppable');
   // const droppable = document.querySelector('.droppable:first-child');
   // const sibling = droppable && droppable.nextElementSibling;
@@ -119,7 +120,7 @@ function moveLeft() {
 }
 
 function moveRight() {
-  currentDroppable = (droppables.length - 1) ? currentDroppable = 0 : currentDroppable + 1;
+  currentDroppable = (currentDroppable === droppables.length - 1) ? 0 : currentDroppable + 1;
   droppables[currentDroppable].focus();
 }
 
