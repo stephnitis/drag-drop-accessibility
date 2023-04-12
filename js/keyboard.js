@@ -4,13 +4,11 @@ const targetList = document.getElementById('targetList');
 const droppables = targetList.querySelectorAll('.droppable');
 const selectList = document.getElementById('selectList');
 const draggables = selectList.querySelectorAll('.draggable');
+
 const focusableSelectors = ['select', '[tabindex]'];
 const focusableElements = document.querySelectorAll(focusableSelectors.join(', '));
-console.log(focusableElements);
 
 let selectElement = null;
-let currentDroppable = 0;
-let currentDraggable = 0;
 
 const selectedItem = document.querySelector('[aria-selected="true"]');
 let nextIndex = 0;
@@ -78,6 +76,7 @@ function selectItem(id) {
   selectElement = document.querySelector(`[data-id="${id}"]`);
   selectElement.setAttribute('aria-selected', 'true');
   selectElement.style.backgroundColor = 'cyan';
+
 }
 
 /**
@@ -117,7 +116,7 @@ function selectTarget(element) {
   getNextFocusIndex();
   setFocusOnNextItem();
   console.log('NEXT', nextIndex);
-  
+
 }
 
 function setFocusOnNextItem() {
@@ -129,7 +128,7 @@ function setFocusOnNextItem() {
   // set the attributes
   const nextItem = focusableElements[nextIndex];
   nextItem.focus();
-  // nextItem.setAttribute('aria-selected', 'true');
+
 }
 
 // need to return the index of the next focusable item in the draggables list
@@ -220,6 +219,8 @@ function moveRight() {
 }
 
 function moveUpOrDown() {
+ // TODO: moving up and down causes bugs after selected target
+
   // find the current element with focus in the document
   let currentElement = document.activeElement;
   console.log(currentElement);
