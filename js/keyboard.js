@@ -101,7 +101,7 @@ function handleTargetKeyDown(event) {
  * selected by the user. It is used to select and highlight the clicked item in a list of items.
  */
 function selectTarget(element) {
-  // potentially I only want to be able to select a target element if I have already select a draggable - otherwise I can only move between the selections
+
   // Deselect all items in the list
   const items = targetList.querySelectorAll('[aria-selected="true"]');
   for (const item of items) {
@@ -111,11 +111,13 @@ function selectTarget(element) {
   // Select the clicked item
   element.setAttribute('aria-selected', 'true');
   element.style.backgroundColor = 'plum';
+  // potentially appendChild is not the best here
+  // potentially selecting the target it part of the problem?
   element.appendChild(selectElement);
-  selectElement.setAttribute('aria-selected', 'false');
   getNextFocusIndex();
   setFocusOnNextItem();
   console.log('NEXT', nextIndex);
+  
 }
 
 function setFocusOnNextItem() {
