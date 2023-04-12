@@ -4,6 +4,9 @@ const targetList = document.getElementById('targetList');
 const droppables = targetList.querySelectorAll('.droppable');
 const selectList = document.getElementById('selectList');
 const draggables = selectList.querySelectorAll('.draggable');
+const focusableSelectors = ['select','[tabindex]'];
+const focusableElements = document.querySelectorAll(focusableSelectors.join(', '));
+console.log(focusableElements);
 
 let selectElement = null;
 let currentDroppable = 0;
@@ -18,6 +21,10 @@ const KEYS = {
   SPACE: ' '
 };
 
+/**
+ * This function initializes keydown event listeners for draggables and droppables and calls two other
+ * functions for handling keydown events and key motions.
+ */
 const initKeydown = () => {
 
   draggables.forEach(draggable => {
@@ -32,6 +39,13 @@ const initKeydown = () => {
 
 };
 
+/**
+ * The function handles keydown events and selects an item if the enter or space key is pressed.
+ * @param event - The event parameter is an object that contains information about the event that
+ * triggered the function. In this case, it is a keydown event. It includes properties such as the key
+ * that was pressed, the target element that the event was triggered on, and methods to prevent the
+ * default behavior of the event.
+ */
 function handleKeyDown(event) {
   const key = event.key;
   const target = event.target;
@@ -59,6 +73,13 @@ function selectItem(id) {
   console.log(selectElement);
 }
 
+/**
+ * This function handles keydown events for a target element and selects it if the enter or space key
+ * is pressed.
+ * @param event - The event parameter is an object that contains information about the event that
+ * occurred, such as the type of event, the target element, and any additional data related to the
+ * event. In this case, it is used to handle a keydown event on a target element.
+ */
 function handleTargetKeyDown(event) {
   let element = event.target;
   if (event.key === KEYS.ENTER || event.key === KEYS.SPACE) {
@@ -68,6 +89,11 @@ function handleTargetKeyDown(event) {
   }
 }
 
+/**
+ * The function selects a target element and deselects all other items in the list.
+ * @param element - The parameter "element" is a reference to the HTML element that was clicked or
+ * selected by the user. It is used to select and highlight the clicked item in a list of items.
+ */
 function selectTarget(element) {
   // Deselect all items in the list
   const items = targetList.querySelectorAll('[aria-selected="true"]');
@@ -81,6 +107,12 @@ function selectTarget(element) {
   element.appendChild(selectElement);
 }
 
+/**
+ * The function handles key events and triggers different actions based on the pressed key.
+ * @param event - The event parameter is an object that contains information about the event that
+ * triggered the function. In this case, it is an event listener for keyboard input, so the
+ * event object would contain information about which key was pressed.
+ */
 function keyMotions(event) {
   const key = event.key;
   switch (key) {
@@ -102,16 +134,34 @@ function keyMotions(event) {
 }
 
 function moveLeft() {
+  // need if / else -> if current focus is draggable move through remainder
+  // else current is droppable move through list
   currentDroppable = (currentDroppable === 0) ? droppables.length - 1 : currentDroppable - 1;
   droppables[currentDroppable].focus();
-
-  // currentDraggable = (currentDraggable === 0) ? draggables.length - 1 : currentDraggable - 1;
-  // draggables[currentDraggable].focus();
 }
 
 function moveRight() {
+  // need if / else -> if current focus is draggable move through remainder
+  // else current is droppable move through list
   currentDroppable = (currentDroppable === droppables.length - 1) ? 0 : currentDroppable + 1;
   droppables[currentDroppable].focus();
+}
+
+function moveUp(){
+  // roving tab index between two sections -> regardless should move to next section
+  // potentially based on current activeElement
+  // need to move up to "next" draggable
+  let focusedElement = document.activeElement;
+  console.log(focusedElement);
+  if(focusedElement.className === "droppable"){
+    selectList.focus();
+  }
+}
+
+function moveDown(){
+  // roving tab index between two sections -> regardless should move to next section
+  // potentially based on current activeElement
+  // need to move up to "next" droppable -> where no element has been placed yet
 }
 
 initKeydown();

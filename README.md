@@ -1,12 +1,13 @@
-# Experimental Project
+# Drag and Drop with Keyboard Accessibility
 
 This project was created to implement an accessible version of a drag and drop game
 
-It utilizes a custom built HTML element with specific keyboard controls that can be utilized alongside drag and drop events
+Drag elements from top and drop them over elements on bottom via mouse
 
-The intent here is to be able to utlize customized selections for all users to interact with specific elements on a page
+OR
 
-Further details in progress...
+Tab into elements use spacebar/enter key to select on element - element should change color if selected
+Keyboard focus will shift to bottom element use tab or arrow keys to navigate through elements spacebar/enter to "drop" element on target
 
 [Deployed Site](https://stephnitis.github.io/drag-drop-accessibility/)
 
