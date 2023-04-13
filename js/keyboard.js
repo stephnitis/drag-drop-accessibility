@@ -8,9 +8,25 @@ const draggables = selectList.querySelectorAll('.draggable');
 const focusableSelectors = ['select', '[tabindex]'];
 const focusableElements = document.querySelectorAll(focusableSelectors.join(', '));
 
-let selectElement = null;
+// const updateFocusableSelectors = () => {
+//   focusableSelectors = [
+//     ...selectList.querySelectorAll('[tabindex="0"]'),
+//     ...targetList.querySelectorAll('[tabindex="0"]'),
+//   ];
+// };
 
+// const moveItem = (fromList, toList, item) => {
+//   ...updateFocusableSelectors();
+// };
+
+// const removeItem = (list, item) => {
+//   ...updateFocusableSelectors();
+// };
+
+
+let selectElement = null;
 const selectedItem = document.querySelector('[aria-selected="true"]');
+
 let nextIndex = 0;
 
 const KEYS = {
@@ -30,34 +46,61 @@ const initKeydown = () => {
 
   draggables.forEach(draggable => {
     draggable.addEventListener('keydown', handleKeyDown);
-    draggable.addEventListener('keydown', keyMotions);
   });
 
   droppables.forEach(droppable => {
-    droppable.addEventListener('keydown', handleTargetKeyDown);
-    droppable.addEventListener('keydown', keyMotions);
+    droppable.addEventListener('keydown', handleKeyDown);
   });
 
 };
 
 /**
- * The function handles keydown events and selects an item if the enter or space key is pressed.
+ * The function handles key events and performs different actions based on the key pressed.
  * @param event - The event parameter is an object that contains information about the event that
- * triggered the function. In this case, it is a keydown event. It includes properties such as the key
- * that was pressed, the target element that the event was triggered on, and methods to prevent the
- * default behavior of the event.
+ * triggered the function. It includes properties such as the type of event, the target element, and
+ * the key that was pressed (if applicable).
  */
 function handleKeyDown(event) {
   const key = event.key;
   const target = event.target;
+  const id = target.getAttribute('data-id');
+  let activeElement = document.activeElement;
 
-  if (key === KEYS.ENTER || key === KEYS.SPACE) {
-    event.preventDefault();
-    droppables[0].focus();
-    let id = target.getAttribute('data-id');
-    selectItem(id);
+  switch (key) {
+    case KEYS.ENTER:
+      event.preventDefault();
+      if (activeElement.classList.contains('draggable')){
+        selectItem(id);
+      } else if (activeElement.classList.contains('droppable')){
+        selectTarget(target);
+      }
+      break;
+    case KEYS.SPACE:
+      event.preventDefault();
+      if (activeElement.classList.contains('draggable')){
+        selectItem(id);
+      } else if (activeElement.classList.contains('droppable')){
+        selectTarget(target);
+      }
+      break;
+    case KEYS.LEFT_ARROW:
+      moveLeft();
+      break;
+    case KEYS.UP_ARROW:
+      moveUpOrDown(key);
+      break;
+    case KEYS.RIGHT_ARROW:
+      moveRight();
+      break;
+    case KEYS.DOWN_ARROW:
+      moveUpOrDown(key);
+      break;
+    default:
+      break;
   }
+
 }
+
 
 /**
  * The function selects an item in a list and deselects all other items.
@@ -66,7 +109,7 @@ function handleKeyDown(event) {
  * can be selected at a time. When an item is clicked, this function deselects all other items in the
  */
 function selectItem(id) {
-
+  droppables[0].focus();
   // Deselect all items in the list
   const items = selectList.querySelectorAll('[aria-selected="true"]');
   for (const item of items) {
@@ -75,24 +118,11 @@ function selectItem(id) {
   // Select the clicked item
   selectElement = document.querySelector(`[data-id="${id}"]`);
   selectElement.setAttribute('aria-selected', 'true');
-  selectElement.style.backgroundColor = 'cyan';
+  // selectElement.style.backgroundColor = 'cyan';
+  selectElement.style.border = '5px solid cyan';
 
 }
 
-/**
- * This function handles keydown events for a target element and selects it if the enter or space key
- * is pressed.
- * @param event - The event parameter is an object that contains information about the event that
- * occurred, such as the type of event, the target element, and any additional data related to the
- * event. In this case, it is used to handle a keydown event on a target element.
- */
-function handleTargetKeyDown(event) {
-  let element = event.target;
-  if (event.key === KEYS.ENTER || event.key === KEYS.SPACE) {
-    event.preventDefault();
-    selectTarget(element);
-  }
-}
 
 /**
  * The function selects a target element and deselects all other items in the list.
@@ -119,6 +149,9 @@ function selectTarget(element) {
 
 }
 
+/**
+ * The function sets focus on the next focusable item in a list and updates its attributes.
+ */
 function setFocusOnNextItem() {
   if (selectedItem) {
     selectedItem.setAttribute('aria-selected', 'false');
@@ -133,38 +166,14 @@ function setFocusOnNextItem() {
 
 // need to return the index of the next focusable item in the draggables list
 function getNextFocusIndex() {
+  // error here after second element is selected - potentially need to change the index of the item pop and push? what is most efficient here? but if element is not in the proper position it cannot be removed with pop or push...
+
   // loop through all the focusable items in the draggables list and return the index of the first item that does not have the aria-selected attribute set to true
   for (let i = 0; i < focusableElements.length; i++) {
     if (focusableElements[i].getAttribute('aria-selected') !== 'true') {
       nextIndex = i;
       return i;
     }
-  }
-}
-
-/**
- * The function handles key events and triggers different actions based on the pressed key.
- * @param event - The event parameter is an object that contains information about the event that
- * triggered the function. In this case, it is an event listener for keyboard input, so the
- * event object would contain information about which key was pressed.
- */
-function keyMotions(event) {
-  const key = event.key;
-  switch (key) {
-    case KEYS.LEFT_ARROW:
-      moveLeft();
-      break;
-    case KEYS.UP_ARROW:
-      moveUpOrDown(key);
-      break;
-    case KEYS.RIGHT_ARROW:
-      moveRight();
-      break;
-    case KEYS.DOWN_ARROW:
-      moveUpOrDown(key);
-      break;
-    default:
-      break;
   }
 }
 
@@ -219,7 +228,7 @@ function moveRight() {
 }
 
 function moveUpOrDown() {
- // TODO: moving up and down causes bugs after selected target
+  // TODO: moving up and down causes bugs after selected target
 
   // find the current element with focus in the document
   let currentElement = document.activeElement;
